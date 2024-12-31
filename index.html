@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Zooming Image</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		body{
+			width: 100vw;
+			height: 100vh;
+			background:#fff;
+		}
+
+		div{
+			width: 500px; 
+			height: 500px;
+			background:url(shoe1.jpg);
+			border: 1px solid #000;
+			background-size: 100% 100%;  
+			position: absolute;
+			overflow: hidden;
+		}
+		.first{
+			top: 50%;
+			left: 20%;
+			transform: translateY(-50%);
+			border: none;
+		}
+		.first:hover + .second{
+			display: block;
+		}
+		.second{
+			background-size: 600% 600%; 
+			top: 50%;
+			left: 53%;
+			transform: translateY(-50%);
+			display: none;
+		}
+		.lens{
+			width: 150px;
+			height: 150px;
+			background: rgba(0, 0, 0, .4);
+			position: absolute;
+			border: 2px solid black;
+			transform: translate(-50%, -50%);
+			pointer-events: none;
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<div class= "first">
+		<span class= "lens"></span>
+	</div>
+	<div class= "second"></div>
+	<script>
+
+		var lens = document.querySelector('.lens');
+		var first = document.querySelector('.first');
+		var second = document.querySelector('.second');
+
+		first.addEventListener('mousemove', function(e){
+
+			var x  = e.clientX - e.target.offsetLeft;
+			var y = e.clientY - e.target.offsetTop;
+
+			lens.style.display = "block";
+			lens.style.left = x + 'px';
+			lens.style.top = y +250+ 'px';
+
+			second.style.backgroundPosition = (x - (500 / 2 / 6)) * -6 + 'px ' + (y - (500 / 2 / 6) + 250) * -6 + 'px';
+            console.log(second.style.backgroundPosition)
+		});
+
+		first.addEventListener('mouseout', function(){
+
+			lens.style.display = "none";
+
+		});
+
+	</script>
+</body>
+</html>
